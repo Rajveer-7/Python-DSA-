@@ -1,21 +1,12 @@
-# Last updated: 11/24/2025, 9:27:09 AM
+# Last updated: 11/24/2025, 10:52:16 AM
 class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        return sorted(s) == sorted(t)
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+     #Most efficient way is makking the hashmap
+     prevMap = {}
 
-        if len(s) != len(t):
-            return False
-
-        countS, countT = {}, {}
-
-        for i in range(len(s)):
-            countS[s[i]] = 1 + countS.get(s[i], 0)
-            countT[t[i]] = 1 + countT.get(t[i], 0)
-
-        for c in countS:
-            if countS[c] != countT.get(c, 0):
-                return False
-        
-        return True
-
-
+     for i, n in enumerate(nums):
+        diff = target - n
+        if diff in prevMap:
+            return[prevMap[diff], i]
+        prevMap[n] = i
+     return 
