@@ -1,6 +1,8 @@
-# Last updated: 11/24/2025, 8:35:55 AM
+# Last updated: 11/24/2025, 9:26:59 AM
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
+        return sorted(s) == sorted(t)
+
         if len(s) != len(t):
             return False
 
