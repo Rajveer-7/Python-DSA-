@@ -1,22 +1,34 @@
-# Last updated: 11/24/2025, 11:20:43 AM
+# Last updated: 11/25/2025, 12:28:28 PM
+from typing import List
+from collections import defaultdict
+
 class Solution:
-    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        ## two pointer solution 
-        nums1, nums2 = sorted(nums1), sorted(nums2)
-        p1 = p2 = 0
-        n, m = len(nums1), len(nums2)
-        ans = []
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        """
+        Groups words that are anagrams of each other.
 
-        while p1 < n and p2<m:
-            if nums1[p1] == nums2[p2]:
-                ans.append(nums1[p1])
-                p1+=1
-                p2+=1
-                continue
-            
-            if nums1[p1] > nums2[p2]:
-                p2 += 1
-            else:
-                p1 += 1
+        Idea:
+        - For each string, build a fixed-size frequency array of length 26,
+          where each index represents a letter from 'a' to 'z'.
+        - Use the frequency array (as a tuple) as a key in a hashmap.
+        - All strings that share the same frequency key are anagrams.
+        """
 
-        return ans
+        # Map: character count signature -> list of anagrams
+        groups = defaultdict(list)
+
+        for s in strs:
+            # Character frequency for this string (only lowercase a-z)
+            count = [0] * 26
+
+            # Build frequency count for current string
+            for c in s:
+                # Map 'a'..'z' to 0..25 using ASCII values
+                count[ord(c) - ord('a')] += 1
+
+            # Use the frequency tuple as a hashable key
+            key = tuple(count)
+            groups[key].append(s)
+
+        # We only need the grouped anagrams (values of the dictionary)
+        return list(groups.values())
